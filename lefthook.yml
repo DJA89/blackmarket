@@ -4,8 +4,8 @@ pre-commit:
     frontend-linters:
       glob: '*.{ts,tsx,js,jsx,json}'
       run: |
-        yarn lint {staged_files} &&
-        yarn format:precommit {staged_files} &&
+        yarn eslint {staged_files} &&
+        yarn prettier --config .prettierrc --write {staged_files} &&
         git update-index {staged_files} &&
         if ! git diff-index HEAD --; then
           echo -e '\033[1;33mThere was an error, please fix and try again'
