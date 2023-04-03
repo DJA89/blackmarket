@@ -1,0 +1,21 @@
+name: lint-tests-and-coverage
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  lint-tests-and-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - run: yarn install --frozen-lockfile
+      - run: yarn run build
+      - run: yarn run lint
+      # - run: yarn test

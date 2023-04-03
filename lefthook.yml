@@ -1,0 +1,13 @@
+pre-commit:
+  parallel: true
+  commands:
+    frontend-linters:
+      glob: '*.{ts,tsx,js,jsx,json}'
+      run: |
+        yarn eslint {staged_files} &&
+        yarn prettier --config .prettierrc --write {staged_files} &&
+        git update-index {staged_files} &&
+        if ! git diff-index HEAD --; then
+          echo -e '\033[1;33mThere was an error, please fix and try again'
+          exit 1
+        fi
