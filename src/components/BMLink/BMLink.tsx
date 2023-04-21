@@ -7,18 +7,18 @@ export default function BMLink({
 }: {
   url: string;
   text: string;
-  disabled: boolean;
+  disabled?: boolean;
 }) {
   return (
     <>
       {disabled ? (
-        <button className="font-dm-sans font-bold text-dark-grey" disabled>
+        <button className="font-bold text-dark-grey" disabled>
           {text}
         </button>
       ) : (
         <Link
           href={url}
-          className="font-dm-sans font-bold text-links hover:underline active:text-active active:underline"
+          className="font-bold text-links hover:underline active:text-active active:underline"
         >
           {text}
         </Link>
