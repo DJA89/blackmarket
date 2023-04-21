@@ -40,7 +40,7 @@ export default function Input({
   }
 
   return (
-    <div style={{ fontFamily: 'DM Sans' }} className="flex flex-col align-top">
+    <div className="flex flex-col align-top">
       <label
         htmlFor={name}
         className={`mb-1 text-base leading-5 ${
@@ -69,6 +69,7 @@ export default function Input({
         />
         {hideButton ? (
           <button
+            aria-label={`Toggle ${label} visibility`}
             className="absolute bottom-4 right-4 h-3"
             onClick={() => setVisible(!visible)}
           >
@@ -76,7 +77,7 @@ export default function Input({
           </button>
         ) : null}
       </div>
-      <span className="text-[#757575]">{errorMessage}</span>
+      <span className="h-4 text-[#757575]">{errorMessage}</span>
     </div>
   );
 }

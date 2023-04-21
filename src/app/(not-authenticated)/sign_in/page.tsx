@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from '../../../components/Link';
 import logo from '../../../../public/Title.png';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
@@ -23,7 +24,6 @@ export default function SignIn() {
         name="email"
         type="text"
         placeholder="Type your email"
-        errorMessage="Great error btw"
         handlechange={setEmail}
       />
       <Input
@@ -36,6 +36,7 @@ export default function SignIn() {
         handlechange={setPassword}
       />
       <Button text="Log in" handleClick={myButtonFunction} />
+      <Link url="" text="I forgot my password" />
     </section>
   );
 }

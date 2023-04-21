@@ -15,6 +15,8 @@ module.exports = {
         'dark-violet': '#00031A',
         focus: '#1D76EF',
         hover: '#446CBC',
+        'light-grey': '#E0E0E0',
+        links: '#076CE0',
       },
       spacing: {
         89: '22.5rem',
