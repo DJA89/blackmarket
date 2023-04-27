@@ -62,7 +62,7 @@ export default function Input({
                       active:border-active active:outline-active-outline \
                       active:placeholder:text-dark-grey \
                       disabled:border-dark-grey disabled:bg-background \
-                      disabled:text-dark-grey`}
+                      disabled:text-dark-grey outline-offset-3`}
           placeholder={placeholder}
           disabled={disabled}
           onChange={handleChange}

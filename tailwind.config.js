@@ -18,9 +18,13 @@ module.exports = {
         'light-grey': '#E0E0E0',
         links: '#076CE0',
       },
+      outlineOffset: {
+        3: '3px',
+      },
       spacing: {
         89: '22.5rem',
         106: '26.5rem',
+        139: '34.75rem',
       },
       margin: {
         23: '5.75rem',
