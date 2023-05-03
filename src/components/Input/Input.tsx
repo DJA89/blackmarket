@@ -66,6 +66,7 @@ export default function Input({
           placeholder={placeholder}
           disabled={disabled}
           onChange={handleChange}
+          aria-label={label}
         />
         {hideButton ? (
           <button

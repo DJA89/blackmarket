@@ -29,7 +29,6 @@ export default function SignIn() {
           type="text"
           placeholder="Type your email"
           handlechange={setEmail}
-          errorMessage="This is my error"
         />
         <Input
           label="Password"
@@ -40,7 +39,7 @@ export default function SignIn() {
           handlechange={setPassword}
         />
         <Button text="Log in" handleClick={myButtonFunction} />
-        <BMLink url="/sign_up" text="I forgot my password" />
+        <BMLink url="" text="I forgot my password" />
       </section>
       <section className="ml-30 flex h-32 w-89 flex-col items-center justify-between rounded-lg bg-white p-6">
         <div>{"Don't have an account"}</div>
