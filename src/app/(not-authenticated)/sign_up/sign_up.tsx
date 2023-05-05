@@ -14,7 +14,7 @@ export default function SignUp() {
   const [name, setName] = useState('');
 
   const myButtonFunction = () => {
-    3;
+    //
   };
 
   return (
