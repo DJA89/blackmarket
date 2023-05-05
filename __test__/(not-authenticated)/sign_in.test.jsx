@@ -72,10 +72,10 @@ describe('Sign In', () => {
     expect(link).toBeInTheDocument();
   });
 
-  it('renders a SignUp button', () => {
+  it('renders a SignUp link', () => {
     render(<SignIn />);
 
-    const input = screen.getByRole('button', {
+    const input = screen.getByRole('link', {
       name: 'Sign up',
     });
 
