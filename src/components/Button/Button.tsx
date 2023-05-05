@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 type ButtonType = 'primary' | 'outline';
 
 export default function Button({
@@ -5,25 +7,33 @@ export default function Button({
   handleClick,
   disabled = false,
   type = 'primary',
+  href,
 }: {
   text: string;
-  handleClick: () => void;
+  handleClick?: () => void;
   disabled?: boolean;
   type?: ButtonType;
+  href?: string;
 }) {
-  let classesForType = '';
+  let classes =
+    'flex h-11 w-72 items-center justify-center rounded-lg  hover:border-transparent hover:bg-hover active:border-active-outline active:bg-active disabled:bg-light-grey disabled:text-dark-grey';
   if (type == 'primary') {
-    classesForType = 'bg-dark-violet text-white';
+    classes = `${classes} bg-dark-violet text-white`;
   } else {
-    classesForType = 'border border-dark-violet bg-white text-dark-violet';
+    classes = `${classes} border border-dark-violet bg-white text-dark-violet`;
   }
+
   return (
-    <button
-      onClick={handleClick}
-      className={`flex h-11 w-72 items-center justify-center rounded-lg ${classesForType} hover:border-transparent hover:bg-hover active:border-active-outline active:bg-active disabled:bg-light-grey disabled:text-dark-grey`}
-      disabled={disabled}
-    >
-      {text}
-    </button>
+    <>
+      {href ? (
+        <Link href={href} className={classes}>
+          {text}
+        </Link>
+      ) : (
+        <button onClick={handleClick} className={classes} disabled={disabled}>
+          {text}
+        </button>
+      )}
+    </>
   );
 }

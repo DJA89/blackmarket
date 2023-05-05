@@ -43,11 +43,7 @@ export default function SignIn() {
       </section>
       <section className="ml-30 flex h-32 w-89 flex-col items-center justify-between rounded-lg bg-white p-6">
         <div>{"Don't have an account"}</div>
-        <Button
-          text="Sign up"
-          type="outline"
-          handleClick={() => router.push('/sign_up')}
-        />
+        <Button text="Sign up" type="outline" href="/sign_up" />
       </section>
     </>
   );

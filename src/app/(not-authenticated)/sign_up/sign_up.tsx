@@ -22,6 +22,7 @@ export default function SignUp() {
       <h1 className="mt-4">
         <Image src={logo} alt="Black Market" />
       </h1>
+      <h2 className="sr-only">Sign up</h2>
       <Input
         label="Email"
         name="email"

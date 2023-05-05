@@ -25,12 +25,12 @@ export default function Input({
   disabled?: boolean;
   handleChange: (e: React.FormEvent<HTMLInputElement>) => void;
 }) {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
 
-  const hiddenImage = visible ? nonVisisbleImage : visibleImage;
+  const hiddenImage = visible ? visibleImage : nonVisisbleImage;
 
   let usedType = type;
-  if (type === 'password' && !visible) {
+  if (type === 'password' && visible) {
     usedType = 'text';
   }
 
@@ -70,7 +70,9 @@ export default function Input({
         />
         {hideButton ? (
           <button
-            aria-label={`Toggle ${label} visibility`}
+            type="button"
+            aria-pressed={visible}
+            aria-label={`Show password`}
             className="absolute bottom-4 right-4 h-3"
             onClick={() => setVisible(!visible)}
           >
