@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 
 import visibleImage from '../../..//public/components/Input/visibility.png';
 import nonVisisbleImage from '../../../public/components/Input/visibility_off.png';
@@ -14,6 +14,7 @@ export default function Input({
   errorMessage = null,
   disabled = false,
   handleChange,
+  value,
 }: {
   name: string;
   label: string;
@@ -23,7 +24,10 @@ export default function Input({
   required?: boolean;
   errorMessage?: string | null;
   disabled?: boolean;
-  handleChange: (e: React.FormEvent<HTMLInputElement>) => void;
+  handleChange: (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  value: string;
 }) {
   const [visible, setVisible] = useState(false);
 
@@ -58,7 +62,7 @@ export default function Input({
                       leading-5 placeholder:text-[#757575] \
                       hover:border-hover hover:placeholder:text-dark-grey \
                       focus:border-black focus:placeholder:text-dark-grey \
-                      focus:outline-dashed focus:outline-focus \
+                      focus-visible:outline-dashed focus-visible:outline-focus \
                       active:border-active active:outline-active-outline \
                       active:placeholder:text-dark-grey \
                       disabled:border-dark-grey disabled:bg-background \
@@ -67,6 +71,11 @@ export default function Input({
           disabled={disabled}
           onChange={handleChange}
           aria-label={label}
+          aria-required={required}
+          aria-describedby={`${name}-error`}
+          aria-invalid={!!errorMessage}
+          autoComplete={name === 'password' ? '' : name}
+          value={value}
         />
         {hideButton ? (
           <button
@@ -80,7 +89,9 @@ export default function Input({
           </button>
         ) : null}
       </div>
-      <span className="h-4 text-[#757575]">{errorMessage}</span>
+      <span className="h-4 text-[#757575]" id={`${name}-error`} role="alert">
+        {errorMessage}
+      </span>
     </div>
   );
 }
