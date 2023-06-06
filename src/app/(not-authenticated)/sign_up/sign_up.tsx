@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 import BMLink from '~/components/BMLink';
 import logo from '~/../public/Title.png';
 import Input from '~/components/Input';

@@ -49,33 +49,3 @@ export const manageError = (error: any, callbacks?: Callbacks) => {
     else callbacks.error(response?.data?.message ?? String(error));
   } else throw error;
 };
-
-export const Steps = {
-  userKind: 'userKind',
-  signUp: 'signUp',
-} as const;
-
-export enum UserKind {
-  brand = 'brand',
-  creator = 'creator',
-  none = '',
-}
-
-export type RawUserMetadata = {
-  id: number;
-  email: string;
-  first_name: string | null;
-  last_name: string | null;
-};
-
-export type RawUserResponse = {
-  creator: RawUserMetadata;
-};
-
-export const debounce = (func: (...args: any[]) => void, wait: number) => {
-  let timeout: NodeJS.Timeout;
-  return (...args: any[]) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), wait);
-  };
-};

@@ -22,7 +22,9 @@ interface AuthProviderProps {
   session: Session | null;
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || '';
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  'https://black-market-juan-rs.herokuapp.com';
 
 const instance = axios.create({
   baseURL: API_URL,

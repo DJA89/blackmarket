@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  isEmailValid,
-  isPasswordValid,
-  SetterFunction,
-  Steps,
-} from '~/utils/utils';
+import { isEmailValid, isPasswordValid, SetterFunction } from '~/utils/utils';
 import { Session } from 'next-auth';
 import { createContext, ReactNode, useContext, useState } from 'react';
 import { useApi } from './useApi';
@@ -80,11 +75,9 @@ export const AuthLayoutProvider = ({
         endpoint: API.signUp,
         withToken: false,
         body: JSON.stringify({
-          user: {
-            email,
-            name,
-            password,
-          },
+          email: email,
+          password1: password,
+          password2: password,
         }),
         callbacks: {
           success: () => {
