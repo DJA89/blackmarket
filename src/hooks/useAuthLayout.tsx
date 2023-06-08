@@ -69,9 +69,9 @@ export const AuthLayoutProvider = ({
     return !!isEmailValid(email) && !!isPasswordValid(password);
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (isValid()) {
-      doPost({
+      await doPost({
         endpoint: API.signUp,
         withToken: false,
         body: JSON.stringify({
