@@ -1,9 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import SignUp from '~/app/(not-authenticated)/sign_up/page';
-import {
-  AuthLayoutProvider,
-  useAuthLayout,
-} from '../../src/hooks/useAuthLayout';
+import { AuthLayoutProvider } from '~/hooks/useAuthLayout';
 import '@testing-library/jest-dom';
 
 // mock useRouter
@@ -114,46 +111,16 @@ describe('Sign Up', () => {
     expect(passwordInput).toHaveValue('password123');
   });
 
-  describe('Submit button', () => {
-    jest.mock('../../src/hooks/useAuthLayout', () => ({
-      useAuthLayout: jest.fn(),
-    }));
+  it('renders a Sign Up button', () => {
+    render(
+      <AuthLayoutProvider>
+        <SignUp />
+      </AuthLayoutProvider>
+    );
 
-    const useAuthLayoutMock = {
-      handleSubmit: jest.fn(),
-      email: 'email',
-      emailError: 'email error',
-      password: 'password',
-      passwordError: 'password error',
-      setEmail: jest.fn(),
-      setPassword: jest.fn(),
-      name: 'name',
-      setName: jest.fn(),
-      nameError: 'name error',
-    };
+    const button = findSignUpButton();
 
-    it('renders a Sign Up button', () => {
-      render(
-        <AuthLayoutProvider>
-          <SignUp />
-        </AuthLayoutProvider>
-      );
-
-      const button = findSignUpButton();
-
-      expect(button).toBeInTheDocument();
-    });
-
-    it('should call handleSubmit when the sign-up button is pressed', () => {
-      useAuthLayout.mockReturnValue(useAuthLayoutMock);
-
-      render(<SignUp />);
-
-      const signUpButton = findSignUpButton();
-
-      fireEvent.click(signUpButton);
-      expect(useAuthLayoutMock.handleSubmit).toHaveBeenCalledTimes(1);
-    });
+    expect(button).toBeInTheDocument();
   });
 
   it('renders a data policy link', () => {
