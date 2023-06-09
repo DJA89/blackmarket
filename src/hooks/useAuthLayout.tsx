@@ -27,7 +27,7 @@ type UseAuthLayoutType = {
   isSignInValid: () => boolean;
 };
 
-const AuthLayoutContext = createContext<UseAuthLayoutType | undefined>(
+export const AuthLayoutContext = createContext<UseAuthLayoutType | undefined>(
   undefined
 );
 

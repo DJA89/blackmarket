@@ -1,7 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import SignUp from '~/app/(not-authenticated)/sign_up/page';
-import { AuthLayoutProvider } from '~/hooks/useAuthLayout';
-import '@testing-library/jest-dom';
+import {
+  AuthLayoutProvider,
+  AuthLayoutContext,
+} from '../../src/hooks/useAuthLayout';
 
 // mock useRouter
 jest.mock('next/navigation', () => ({
@@ -121,6 +123,20 @@ describe('Sign Up', () => {
     const button = findSignUpButton();
 
     expect(button).toBeInTheDocument();
+  });
+
+  it('should call handleSubmit when the sign-up button is pressed', () => {
+    const handleSubmit = jest.fn();
+    render(
+      <AuthLayoutContext.Provider value={{ handleSubmit }}>
+        <SignUp />
+      </AuthLayoutContext.Provider>
+    );
+
+    const signUpButton = findSignUpButton();
+
+    fireEvent.click(signUpButton);
+    expect(handleSubmit).toHaveBeenCalledTimes(1);
   });
 
   it('renders a data policy link', () => {
