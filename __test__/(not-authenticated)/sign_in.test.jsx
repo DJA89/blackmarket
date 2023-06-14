@@ -1,6 +1,7 @@
-import { render, screen } from '@testing-library/react';
-import SignIn from '../../src/app/(not-authenticated)/sign_in/page';
-import '@testing-library/jest-dom';
+import { render, screen, fireEvent } from '@testing-library/react';
+import SignIn from '~/app/(not-authenticated)/sign_in/page';
+import { signIn } from 'next-auth/react';
+import { AuthLayoutProvider } from '../../src/hooks/useAuthLayout';
 
 // mock useRouter
 jest.mock('next/navigation', () => ({
@@ -23,9 +24,17 @@ jest.mock('next/navigation', () => ({
   },
 }));
 
+jest.mock('next-auth/react', () => ({
+  signIn: jest.fn(),
+}));
+
 describe('Sign In', () => {
   it('renders a heading', () => {
-    render(<SignIn />);
+    render(
+      <AuthLayoutProvider>
+        <SignIn />
+      </AuthLayoutProvider>
+    );
 
     const heading = screen.getByRole('heading', {
       name: 'Black Market',
@@ -35,7 +44,11 @@ describe('Sign In', () => {
   });
 
   it('renders an email input', () => {
-    render(<SignIn />);
+    render(
+      <AuthLayoutProvider>
+        <SignIn />
+      </AuthLayoutProvider>
+    );
 
     const input = screen.getByRole('textbox', {
       name: 'Email',
@@ -45,7 +58,11 @@ describe('Sign In', () => {
   });
 
   it('renders a password input', () => {
-    render(<SignIn />);
+    render(
+      <AuthLayoutProvider>
+        <SignIn />
+      </AuthLayoutProvider>
+    );
 
     const input = screen.getByLabelText(/^Password$/);
 
@@ -53,7 +70,11 @@ describe('Sign In', () => {
   });
 
   it('renders a Sign In button', () => {
-    render(<SignIn />);
+    render(
+      <AuthLayoutProvider>
+        <SignIn />
+      </AuthLayoutProvider>
+    );
 
     const button = screen.getByRole('button', {
       name: 'Log in',
@@ -63,7 +84,11 @@ describe('Sign In', () => {
   });
 
   it('renders a forgot password link', () => {
-    render(<SignIn />);
+    render(
+      <AuthLayoutProvider>
+        <SignIn />
+      </AuthLayoutProvider>
+    );
 
     const link = screen.getByRole('link', {
       name: 'I forgot my password',
@@ -73,12 +98,57 @@ describe('Sign In', () => {
   });
 
   it('renders a SignUp link', () => {
-    render(<SignIn />);
+    render(
+      <AuthLayoutProvider>
+        <SignIn />
+      </AuthLayoutProvider>
+    );
 
     const input = screen.getByRole('link', {
       name: 'Sign up',
     });
 
     expect(input).toBeInTheDocument();
+  });
+
+  it('calls signIn when the sign-in button is pressed with valid credentials', () => {
+    const { getByLabelText, getByText } = render(
+      <AuthLayoutProvider>
+        <SignIn />
+      </AuthLayoutProvider>
+    );
+    const emailInput = getByLabelText('Email');
+    const passwordInput = getByLabelText('Password');
+    const signInButton = getByText('Log in');
+
+    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'password123' } });
+    fireEvent.click(signInButton);
+
+    expect(signIn).toHaveBeenCalledWith('credentials', {
+      username: 'test@example.com',
+      password: 'password123',
+      redirect: true,
+      callbackUrl: '/',
+    });
+  });
+
+  it('does not call signIn when the sign-in button is pressed with invalid credentials', () => {
+    console.log('this is the test');
+    const { getByLabelText, getByText } = render(
+      <AuthLayoutProvider>
+        <SignIn />
+      </AuthLayoutProvider>
+    );
+    const emailInput = getByLabelText('Email');
+    const passwordInput = getByLabelText('Password');
+    const signInButton = getByText('Log in');
+
+    fireEvent.change(emailInput, { target: { value: 'test' } });
+    fireEvent.change(passwordInput, { target: { value: 'password' } });
+    fireEvent.click(signInButton);
+
+    expect(signIn).not.toHaveBeenCalled();
+    console.log('here ends the test');
   });
 });
