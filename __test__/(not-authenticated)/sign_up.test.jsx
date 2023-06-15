@@ -26,6 +26,36 @@ jest.mock('next/navigation', () => ({
   },
 }));
 
+const findEmailInput = () => screen.getByRole('textbox', { name: 'Email' });
+
+const findFullNameInput = () =>
+  screen.getByRole('textbox', { name: 'Full Name' });
+
+const findPasswordInput = () => screen.getByLabelText(/^Password$/);
+
+const findSignUpButton = () => screen.getByRole('button', { name: 'Sign up' });
+
+const fillEmailInput = () => {
+  const input = findEmailInput();
+  fireEvent.change(input, { target: { value: 'test@example.com' } });
+
+  return input;
+};
+
+const fillFullNameInput = () => {
+  const input = findFullNameInput();
+  fireEvent.change(input, { target: { value: 'John Doe' } });
+
+  return input;
+};
+
+const fillPasswordInput = () => {
+  const input = findPasswordInput();
+  fireEvent.change(input, { target: { value: 'password123' } });
+
+  return input;
+};
+
 describe('Sign Up', () => {
   it('renders a heading', () => {
     render(
@@ -180,41 +210,4 @@ describe('Sign Up', () => {
 
     expect(link).toBeInTheDocument();
   });
-
-  const findEmailInput = () => screen.getByRole('textbox', { name: 'Email' });
-
-  const findFullNameInput = () =>
-    screen.getByRole('textbox', { name: 'Full Name' });
-
-  const findPasswordInput = () => screen.getByLabelText(/^Password$/);
-
-  const findSignUpButton = () =>
-    screen.getByRole('button', { name: 'Sign up' });
-
-  const fillEmailInput = () => {
-    const input = findEmailInput();
-    fireEvent.change(input, { target: { value: 'test@example.com' } });
-
-    return input;
-  };
-
-  const fillFullNameInput = () => {
-    const input = findFullNameInput();
-    fireEvent.change(input, { target: { value: 'John Doe' } });
-
-    return input;
-  };
-
-  const fillPasswordInput = () => {
-    const input = findPasswordInput();
-    fireEvent.change(input, { target: { value: 'password123' } });
-
-    return input;
-  };
-
-  const fillForm = () => {
-    fillEmailInput();
-    fillFullNameInput();
-    fillPasswordInput();
-  };
 });

@@ -1,7 +1,7 @@
 import { useState, ChangeEvent } from 'react';
 
-import visibleImage from '../../..//public/components/Input/visibility.png';
-import nonVisisbleImage from '../../../public/components/Input/visibility_off.png';
+import visibleImage from '~/../public/components/Input/visibility.png';
+import nonVisisbleImage from '~/../public/components/Input/visibility_off.png';
 import Image from 'next/image';
 
 export default function Input({
