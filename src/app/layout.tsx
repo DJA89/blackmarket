@@ -1,4 +1,8 @@
 import { DM_Sans } from 'next/font/google';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '~/../pages/api/auth/[...nextauth]';
+import { AuthLayoutProvider } from '~/hooks/useAuthLayout';
+import AuthContext from '~/components/Providers/AuthContext';
 
 import './globals.css';
 
@@ -12,14 +16,20 @@ export const metadata = {
   description: 'Practice project',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
+
   return (
     <html lang="en" className={fontDMSans.className}>
-      <body>{children}</body>
+      <body>
+        <AuthContext session={session}>
+          <AuthLayoutProvider session={session}>{children}</AuthLayoutProvider>
+        </AuthContext>
+      </body>
     </html>
   );
 }

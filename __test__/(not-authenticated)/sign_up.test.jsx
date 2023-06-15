@@ -1,6 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import SignUp from '../../src/app/(not-authenticated)/sign_up/page';
-import '@testing-library/jest-dom';
+import { render, screen, fireEvent } from '@testing-library/react';
+import SignUp from '~/app/(not-authenticated)/sign_up/page';
+import {
+  AuthLayoutProvider,
+  AuthLayoutContext,
+} from '../../src/hooks/useAuthLayout';
 
 // mock useRouter
 jest.mock('next/navigation', () => ({
@@ -23,9 +26,43 @@ jest.mock('next/navigation', () => ({
   },
 }));
 
+const findEmailInput = () => screen.getByRole('textbox', { name: 'Email' });
+
+const findFullNameInput = () =>
+  screen.getByRole('textbox', { name: 'Full Name' });
+
+const findPasswordInput = () => screen.getByLabelText(/^Password$/);
+
+const findSignUpButton = () => screen.getByRole('button', { name: 'Sign up' });
+
+const fillEmailInput = () => {
+  const input = findEmailInput();
+  fireEvent.change(input, { target: { value: 'test@example.com' } });
+
+  return input;
+};
+
+const fillFullNameInput = () => {
+  const input = findFullNameInput();
+  fireEvent.change(input, { target: { value: 'John Doe' } });
+
+  return input;
+};
+
+const fillPasswordInput = () => {
+  const input = findPasswordInput();
+  fireEvent.change(input, { target: { value: 'password123' } });
+
+  return input;
+};
+
 describe('Sign Up', () => {
   it('renders a heading', () => {
-    render(<SignUp />);
+    render(
+      <AuthLayoutProvider>
+        <SignUp />
+      </AuthLayoutProvider>
+    );
 
     const heading = screen.getByRole('heading', {
       name: 'Black Market',
@@ -35,45 +72,109 @@ describe('Sign Up', () => {
   });
 
   it('renders an email input', () => {
-    render(<SignUp />);
+    render(
+      <AuthLayoutProvider>
+        <SignUp />
+      </AuthLayoutProvider>
+    );
 
-    const input = screen.getByRole('textbox', {
-      name: 'Email',
-    });
+    const input = findEmailInput();
 
     expect(input).toBeInTheDocument();
+  });
+
+  it('should update the email input value when typed into', () => {
+    render(
+      <AuthLayoutProvider>
+        <SignUp />
+      </AuthLayoutProvider>
+    );
+
+    const emailInput = fillEmailInput();
+
+    expect(emailInput).toHaveValue('test@example.com');
   });
 
   it('renders a full name input', () => {
-    render(<SignUp />);
+    render(
+      <AuthLayoutProvider>
+        <SignUp />
+      </AuthLayoutProvider>
+    );
 
-    const input = screen.getByRole('textbox', {
-      name: 'Full Name',
-    });
+    const input = findFullNameInput();
 
     expect(input).toBeInTheDocument();
+  });
+
+  it('should update the name input value when typed into', () => {
+    render(
+      <AuthLayoutProvider>
+        <SignUp />
+      </AuthLayoutProvider>
+    );
+
+    const nameInput = fillFullNameInput();
+
+    expect(nameInput).toHaveValue('John Doe');
   });
 
   it('renders a password input', () => {
-    render(<SignUp />);
+    render(
+      <AuthLayoutProvider>
+        <SignUp />
+      </AuthLayoutProvider>
+    );
 
-    const input = screen.getByLabelText(/^Password$/);
+    const input = findPasswordInput();
 
     expect(input).toBeInTheDocument();
   });
 
-  it('renders a Sign Up button', () => {
-    render(<SignUp />);
+  it('should update the password input value when typed into', () => {
+    render(
+      <AuthLayoutProvider>
+        <SignUp />
+      </AuthLayoutProvider>
+    );
 
-    const button = screen.getByRole('button', {
-      name: 'Sign up',
-    });
+    const passwordInput = fillPasswordInput();
+
+    expect(passwordInput).toHaveValue('password123');
+  });
+
+  it('renders a Sign Up button', () => {
+    render(
+      <AuthLayoutProvider>
+        <SignUp />
+      </AuthLayoutProvider>
+    );
+
+    const button = findSignUpButton();
 
     expect(button).toBeInTheDocument();
   });
 
+  it('should call handleSubmit when the sign-up button is pressed', () => {
+    const handleSubmit = jest.fn();
+    render(
+      <AuthLayoutContext.Provider value={{ handleSubmit }}>
+        <SignUp />
+      </AuthLayoutContext.Provider>
+    );
+
+    const signUpButton = findSignUpButton();
+
+    fireEvent.click(signUpButton);
+    expect(handleSubmit).toHaveBeenCalledTimes(1);
+  });
+
   it('renders a data policy link', () => {
-    render(<SignUp />);
+    render(
+      <AuthLayoutProvider>
+        <SignUp />
+      </AuthLayoutProvider>
+    );
 
     const link = screen.getByRole('link', {
       name: 'Data Policy',
@@ -83,7 +184,11 @@ describe('Sign Up', () => {
   });
 
   it('renders a cookies policy link', () => {
-    render(<SignUp />);
+    render(
+      <AuthLayoutProvider>
+        <SignUp />
+      </AuthLayoutProvider>
+    );
 
     const link = screen.getByRole('link', {
       name: 'Cookies Policy.',
@@ -93,7 +198,11 @@ describe('Sign Up', () => {
   });
 
   it('renders a Sign In link', () => {
-    render(<SignUp />);
+    render(
+      <AuthLayoutProvider>
+        <SignUp />
+      </AuthLayoutProvider>
+    );
 
     const link = screen.getByRole('link', {
       name: 'Log in',
