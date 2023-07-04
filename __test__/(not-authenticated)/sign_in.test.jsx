@@ -29,6 +29,10 @@ jest.mock('next-auth/react', () => ({
 }));
 
 describe('Sign In', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('renders a heading', () => {
     render(
       <AuthLayoutProvider>
@@ -134,7 +138,6 @@ describe('Sign In', () => {
   });
 
   it('does not call signIn when the sign-in button is pressed with invalid credentials', () => {
-    console.log('this is the test');
     const { getByLabelText, getByText } = render(
       <AuthLayoutProvider>
         <SignIn />
