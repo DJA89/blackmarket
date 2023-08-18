@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import BMLink from '../../../components/BMLink';
-import logo from '../../../../public/Title.png';
-import Input from '../../../components/Input';
-import Button from '../../../components/Button';
+import BMLink from '~/components/BMLink';
+import logo from '~/../public/Title.png';
+import Input from '~/components/Input';
+import Button from '~/components/Button';
 import Image from 'next/image';
 
 export default function SignIn() {
@@ -26,7 +26,7 @@ export default function SignIn() {
         <Input
           label="Email"
           name="email"
-          type="text"
+          type="email"
           placeholder="Type your email"
           handlechange={setEmail}
         />
