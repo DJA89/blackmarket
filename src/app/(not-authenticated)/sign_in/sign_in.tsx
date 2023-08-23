@@ -21,16 +21,9 @@ export default function SignIn() {
   } = useAuthLayout();
 
   const handleSignIn = () => {
-    console.log('Inside handleSignIn');
-
-    console.log(
-      '🚀 ~ file: sign_in.tsx:27 ~ handleSignIn ~ isSignInValid:',
-      isSignInValid()
-    );
     if (isSignInValid()) {
-      console.log("I'ma enter either way");
       signIn('credentials', {
-        username: email,
+        email: email,
         password: password,
         redirect: true,
         callbackUrl: paths.home,

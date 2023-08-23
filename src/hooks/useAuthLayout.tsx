@@ -25,6 +25,7 @@ type UseAuthLayoutType = {
   setPassword: SetterFunction<string>;
   setPasswordError: SetterFunction<string>;
   isSignInValid: () => boolean;
+  isSignUpValid: () => boolean;
 };
 
 export const AuthLayoutContext = createContext<UseAuthLayoutType | undefined>(
@@ -52,21 +53,24 @@ export const AuthLayoutProvider = ({
   function isSignInValid() {
     setEmailError(!isEmailValid(email) ? 'Your email is invalid' : '');
 
-    setPasswordError(
-      !isPasswordValid(password) ? 'Your password is invalid.' : ''
-    );
-
-    return !!isEmailValid(email) && !!isPasswordValid(password);
+    return !!isEmailValid(email);
   }
 
-  function isValid() {
+  function isSignUpValid() {
+    const emailValid = isSignInValid();
     setEmailError(!isEmailValid(email) ? 'Your email is invalid' : '');
 
     setPasswordError(
       !isPasswordValid(password) ? 'Your password is invalid.' : ''
     );
 
-    return !!isEmailValid(email) && !!isPasswordValid(password);
+    return emailValid && !!isPasswordValid(password);
+  }
+
+  function isValid() {
+    setEmailError(!isEmailValid(email) ? 'Your email is invalid' : '');
+
+    return !!isEmailValid(email);
   }
 
   const handleSubmit = async () => {
@@ -103,6 +107,7 @@ export const AuthLayoutProvider = ({
     nameError,
     setPassword,
     setPasswordError,
+    isSignUpValid,
     isSignInValid,
   };
 
