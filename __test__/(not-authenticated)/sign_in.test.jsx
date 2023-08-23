@@ -130,7 +130,7 @@ describe('Sign In', () => {
     fireEvent.click(signInButton);
 
     expect(signIn).toHaveBeenCalledWith('credentials', {
-      username: 'test@example.com',
+      email: 'test@example.com',
       password: 'password123',
       redirect: true,
       callbackUrl: '/',
@@ -152,6 +152,5 @@ describe('Sign In', () => {
     fireEvent.click(signInButton);
 
     expect(signIn).not.toHaveBeenCalled();
-    console.log('here ends the test');
   });
 });
