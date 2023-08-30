@@ -41,18 +41,14 @@ export const authOptions: AuthOptions = {
             throw new Error(error.error);
           }
 
-          let response = await res.json();
-          let user = response['user'];
-
-          const accessToken = response['access_token'];
+          let { user, access_token } = await res.json();
 
           // If no error and we have user data, return it
           if (res.ok && user) {
-            user.accessToken = accessToken;
+            user.accessToken = access_token;
             return user;
           }
         }
-
         // Return null if user data could not be retrieved
         return null;
       },
