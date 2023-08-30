@@ -33,7 +33,7 @@ export default function SignIn() {
 
   return (
     <>
-      <section className="mb-5 ml-30 mt-16 flex h-106 w-89 flex-col items-center justify-between rounded-lg bg-white p-9">
+      <section className="mb-5 ml-30 mt-16 flex h-106 w-90 flex-col items-center justify-between rounded-lg bg-white p-9">
         <h1 className="mt-3">
           <Image src={logo} alt="Black Market" />
         </h1>
@@ -45,6 +45,7 @@ export default function SignIn() {
           placeholder="Type your email"
           type="email"
           value={email}
+          extraClasses="w-72"
         />
         <Input
           errorMessage={passwordError}
@@ -55,11 +56,12 @@ export default function SignIn() {
           placeholder="Type your password"
           type="password"
           value={password}
+          extraClasses="w-72"
         />
-        <Button text="Log in" handleClick={handleSignIn} />
+        <Button text="Log in" handleClick={handleSignIn} extraClasses="w-72" />
         <BMLink url="" text="I forgot my password" />
       </section>
-      <section className="ml-30 flex h-32 w-89 flex-col items-center justify-between rounded-lg bg-white p-6">
+      <section className="ml-30 flex h-32 w-90 flex-col items-center justify-between rounded-lg bg-white p-6">
         <div>{"Don't have an account"}</div>
         <Button text="Sign up" type="outline" href="/sign_up" />
       </section>

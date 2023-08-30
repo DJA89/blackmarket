@@ -12,6 +12,7 @@ export default function Input({
   hideButton = false,
   required = false,
   errorMessage = null,
+  extraClasses = '',
   disabled = false,
   handleChange,
   value,
@@ -23,6 +24,7 @@ export default function Input({
   hideButton?: boolean;
   required?: boolean;
   errorMessage?: string | null;
+  extraClasses?: string;
   disabled?: boolean;
   handleChange: (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -58,7 +60,7 @@ export default function Input({
           name={name}
           type={usedType}
           // eslint-disable-next-line tailwindcss/classnames-order, tailwindcss/no-custom-classname
-          className={`h-11 w-72 rounded-lg border ${inputBorderClass} p-3 \
+          className={`h-11 rounded-lg border ${inputBorderClass} p-3 \
                       leading-5 placeholder:text-[#757575] \
                       hover:border-hover hover:placeholder:text-dark-grey \
                       focus:border-black focus:placeholder:text-dark-grey \
@@ -66,7 +68,8 @@ export default function Input({
                       active:border-active active:outline-active-outline \
                       active:placeholder:text-dark-grey \
                       disabled:border-dark-grey disabled:bg-background \
-                      disabled:text-dark-grey outline-offset-3`}
+                      disabled:text-dark-grey outline-offset-3
+                      ${extraClasses}`}
           placeholder={placeholder}
           disabled={disabled}
           onChange={handleChange}

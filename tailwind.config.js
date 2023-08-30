@@ -22,8 +22,11 @@ module.exports = {
         3: '3px',
       },
       spacing: {
-        89: '22.5rem',
+        23: '5.75rem',
+        51: '12.75rem',
+        90: '22.5rem',
         106: '26.5rem',
+        121: '30.25rem',
         139: '34.75rem',
       },
       margin: {

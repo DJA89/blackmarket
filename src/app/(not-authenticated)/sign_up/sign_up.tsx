@@ -23,7 +23,7 @@ export default function SignUp() {
   } = useAuthLayout();
 
   return (
-    <section className="mb-5 ml-30 mt-16 flex h-139 w-89 flex-col items-center justify-between rounded-lg bg-white px-9 py-8">
+    <section className="mb-5 ml-30 mt-16 flex h-139 w-90 flex-col items-center justify-between rounded-lg bg-white px-9 py-8">
       <h1 className="mt-4">
         <Image src={logo} alt="Black Market" />
       </h1>
@@ -36,6 +36,7 @@ export default function SignUp() {
         value={email}
         handleChange={({ target: { value } }) => setEmail(value)}
         errorMessage={emailError}
+        extraClasses="w-72"
       />
       <Input
         label="Full Name"
@@ -44,6 +45,7 @@ export default function SignUp() {
         value={name}
         handleChange={({ target: { value } }) => setName(value)}
         errorMessage={nameError}
+        extraClasses="w-72"
       />
       <Input
         label="Password"
@@ -54,8 +56,9 @@ export default function SignUp() {
         hideButton={true}
         handleChange={({ target: { value } }) => setPassword(value)}
         errorMessage={passwordError}
+        extraClasses="w-72"
       />
-      <Button text="Sign up" handleClick={handleSubmit} />
+      <Button text="Sign up" handleClick={handleSubmit} extraClasses="w-72" />
       <div className="text-center">
         By signing up, you accept the <BMLink url="" text="Data Policy" /> and
         the <BMLink url="" text="Cookies Policy." />
