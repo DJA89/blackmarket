@@ -23,7 +23,7 @@ export default function Button({
   image?: HTMLImageElement | null;
 }) {
   let classes =
-    'px-4 flex h-11 items-center justify-center rounded-lg  hover:border-transparent hover:bg-hover active:border-active-outline active:bg-active disabled:bg-light-grey disabled:text-dark-grey';
+    'px-4 flex h-11 items-center justify-center rounded-lg hover:border-transparent hover:bg-hover active:border-active-outline active:bg-active disabled:bg-light-grey disabled:text-dark-grey';
   if (type == 'primary') {
     classes = `${classes} bg-dark-violet text-white`;
   } else {

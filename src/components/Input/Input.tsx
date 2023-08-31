@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 export default function Input({
   name,
-  label,
+  label = null,
   type = 'text',
   placeholder = '',
   hideButton = false,
@@ -18,7 +18,7 @@ export default function Input({
   value,
 }: {
   name: string;
-  label: string;
+  label?: string | null;
   type?: string;
   placeholder?: string;
   hideButton?: boolean;
@@ -47,14 +47,16 @@ export default function Input({
 
   return (
     <div className="flex flex-col align-top">
-      <label
-        htmlFor={name}
-        className={`mb-1 text-base leading-5 ${
-          disabled ? 'text-dark-grey' : 'text-dark-violet'
-        }`}
-      >
-        {`${label}${required ? ' *' : ''}`}
-      </label>
+      {label ? (
+        <label
+          htmlFor={name}
+          className={`mb-1 text-base leading-5 ${
+            disabled ? 'text-dark-grey' : 'text-dark-violet'
+          }`}
+        >
+          {`${label}${required ? ' *' : ''}`}
+        </label>
+      ) : null}
       <div className="relative flex">
         <input
           name={name}
