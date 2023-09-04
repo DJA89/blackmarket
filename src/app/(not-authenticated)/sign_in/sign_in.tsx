@@ -1,20 +1,34 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 import BMLink from '~/components/BMLink';
 import logo from '~/../public/Title.png';
 import Input from '~/components/Input';
 import Button from '~/components/Button';
 import Image from 'next/image';
+import { useAuthLayout } from '~/hooks/useAuthLayout';
+import { paths } from '~/utils/paths';
 
 export default function SignIn() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const router = useRouter();
+  const {
+    isSignInValid,
+    email,
+    setEmail,
+    emailError,
+    password,
+    passwordError,
+    setPassword,
+  } = useAuthLayout();
 
-  const myButtonFunction = () => {
-    //
+  const handleSignIn = () => {
+    if (isSignInValid()) {
+      signIn('credentials', {
+        email: email,
+        password: password,
+        redirect: true,
+        callbackUrl: paths.home,
+      });
+    }
   };
 
   return (
@@ -24,21 +38,25 @@ export default function SignIn() {
           <Image src={logo} alt="Black Market" />
         </h1>
         <Input
+          errorMessage={emailError}
+          handleChange={({ target: { value } }) => setEmail(value)}
           label="Email"
           name="email"
-          type="email"
           placeholder="Type your email"
-          handlechange={setEmail}
+          type="email"
+          value={email}
         />
         <Input
+          errorMessage={passwordError}
+          handleChange={({ target: { value } }) => setPassword(value)}
+          hideButton={true}
           label="Password"
           name="password"
-          type="password"
           placeholder="Type your password"
-          hideButton={true}
-          handlechange={setPassword}
+          type="password"
+          value={password}
         />
-        <Button text="Log in" handleClick={myButtonFunction} />
+        <Button text="Log in" handleClick={handleSignIn} />
         <BMLink url="" text="I forgot my password" />
       </section>
       <section className="ml-30 flex h-32 w-89 flex-col items-center justify-between rounded-lg bg-white p-6">
