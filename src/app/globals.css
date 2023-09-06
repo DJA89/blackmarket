@@ -113,6 +113,23 @@ a {
     @apply bg-black;
     @apply p-3;
     @apply text-white;
+    @apply hover:bg-hover;
+    @apply active:border-active-outline;
+    @apply active:bg-active;
+  }
+
+  .mobile-menu-item {
+    @apply w-full;
+    @apply border-b;
+    @apply border-e;
+    @apply border-s;
+    @apply border-white;
+    @apply bg-black;
+    @apply p-3;
+    @apply text-white;
+    @apply hover:bg-hover;
+    @apply active:border-active-outline;
+    @apply active:bg-active;
   }
 }
 

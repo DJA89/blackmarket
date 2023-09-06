@@ -3,10 +3,11 @@ import { useState, ChangeEvent } from 'react';
 import visibleImage from '~/../public/components/Input/visibility.png';
 import nonVisisbleImage from '~/../public/components/Input/visibility_off.png';
 import Image from 'next/image';
+import InnerInput from './InnerInput';
 
 export default function Input({
   name,
-  label = null,
+  label,
   type = 'text',
   placeholder = '',
   hideButton = false,
@@ -18,7 +19,7 @@ export default function Input({
   value,
 }: {
   name: string;
-  label?: string | null;
+  label: string;
   type?: string;
   placeholder?: string;
   hideButton?: boolean;
@@ -47,40 +48,28 @@ export default function Input({
 
   return (
     <div className="flex flex-col align-top">
-      {label ? (
-        <label
-          htmlFor={name}
-          className={`mb-1 text-base leading-5 ${
-            disabled ? 'text-dark-grey' : 'text-dark-violet'
-          }`}
-        >
-          {`${label}${required ? ' *' : ''}`}
-        </label>
-      ) : null}
+      <label
+        htmlFor={name}
+        className={`mb-1 text-base leading-5 ${
+          disabled ? 'text-dark-grey' : 'text-dark-violet'
+        }`}
+      >
+        {`${label}${required ? ' *' : ''}`}
+      </label>
       <div className="relative flex">
-        <input
+        <InnerInput
           name={name}
           type={usedType}
-          // eslint-disable-next-line tailwindcss/classnames-order, tailwindcss/no-custom-classname
-          className={`h-11 rounded-lg border ${inputBorderClass} p-3 \
-                      leading-5 placeholder:text-[#757575] \
-                      hover:border-hover hover:placeholder:text-dark-grey \
-                      focus:border-black focus:placeholder:text-dark-grey \
-                      focus-visible:outline-dashed focus-visible:outline-focus \
-                      active:border-active active:outline-active-outline \
-                      active:placeholder:text-dark-grey \
-                      disabled:border-dark-grey disabled:bg-background \
-                      disabled:text-dark-grey outline-offset-3
-                      ${extraClasses}`}
+          extraClasses={extraClasses}
           placeholder={placeholder}
           disabled={disabled}
-          onChange={handleChange}
           aria-label={label}
-          aria-required={required}
+          required={required}
           aria-describedby={`${name}-error`}
-          aria-invalid={!!errorMessage}
-          autoComplete={name === 'password' ? '' : name}
+          errorMessage={errorMessage}
           value={value}
+          handleChange={handleChange}
+          visible={visible}
         />
         {hideButton ? (
           <button
