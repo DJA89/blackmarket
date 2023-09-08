@@ -12,14 +12,6 @@ import SearchBar from '~/components/SearchBar';
 export default function MobileHeader() {
   const menu = useMenuState();
 
-  let extraArrowClass = '';
-  let extraMenuClass = '';
-  if (menu.visible) {
-    extraMenuClass = 'rounded-t-lg';
-    extraArrowClass = 'rotate-180';
-  } else {
-    extraMenuClass = 'rounded-lg';
-  }
   return (
     <header className="flex w-full flex-col">
       <div className="flex h-23 w-full flex-row items-center justify-between bg-black p-4">
@@ -33,24 +25,27 @@ export default function MobileHeader() {
             text=""
             type="primary"
             href="/#"
+            aria-label="Shopping Cart"
             image={smallShoppingCartSymbol}
           />
           <div className="flex flex-row">
             <MenuButton
               {...menu}
-              className={`flex h-11 w-14 items-center justify-around border border-white bg-black px-3 text-white hover:bg-hover active:border-active-outline active:bg-active ${extraMenuClass}`}
+              className={
+                'flex h-11 w-14 items-center justify-around border border-white bg-black px-3 text-white hover:bg-hover active:border-active-outline active:bg-active'
+              }
             >
               <Image src={hamburger} alt="" />
             </MenuButton>
             <Menu
               {...menu}
               aria-label="My Account"
-              className="flex flex-col w-full"
+              className="flex w-full flex-col"
               orientation="vertical"
             >
               <MenuItem
                 {...menu}
-                className="mobile-menu-item border mt-3"
+                className="mobile-menu-item mt-3 border"
                 as="a"
                 href="#"
               >
