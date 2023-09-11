@@ -63,7 +63,7 @@ export default function Input({
           extraClasses={extraClasses}
           placeholder={placeholder}
           disabled={disabled}
-          aria-label={label}
+          ariaLabel={label}
           required={required}
           aria-describedby={`${name}-error`}
           errorMessage={errorMessage}

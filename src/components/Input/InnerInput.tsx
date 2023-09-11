@@ -2,7 +2,7 @@ import { ChangeEvent } from 'react';
 
 export default function Input({
   name,
-  label,
+  ariaLabel,
   type = 'text',
   placeholder = '',
   required = false,
@@ -14,7 +14,7 @@ export default function Input({
   visible = true,
 }: {
   name: string;
-  label: string;
+  ariaLabel: string;
   type?: string;
   placeholder?: string;
   hideButton?: boolean;
@@ -56,7 +56,7 @@ export default function Input({
       placeholder={placeholder}
       disabled={disabled}
       onChange={handleChange}
-      aria-label={label}
+      aria-label={ariaLabel}
       aria-required={required}
       aria-describedby={`${name}-error`}
       aria-invalid={!!errorMessage}

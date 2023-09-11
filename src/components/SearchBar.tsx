@@ -11,7 +11,7 @@ export default function SearchBar({
   return (
     <InnerInput
       name="Search"
-      label="Search"
+      ariaLabel="Search"
       placeholder="Search for products"
       value={searchValue}
       extraClasses={`flex-1 ${extraClasses}`}
