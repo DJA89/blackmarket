@@ -23,11 +23,7 @@ export default function DesktopHeader() {
   return (
     <header className="w-full bg-black">
       <div className="flex h-23  flex-row items-center justify-between p-14">
-        <Link
-          href="/home"
-          className="my-2 mr-[calc(450vw/32-5.25rem)] shrink-0 xl:mr-24"
-        >
-          {/* (100vw-48rem)*(4.5rem/(80rem-48rem))+1.5rem So it slides nicely */}
+        <Link href="/home" className="my-2 mr-6 lg:mr-15 shrink-0 xl:mr-24">
           <Image src={Logo} alt="Black Market" className="shrink-0" />
         </Link>
         <SearchBar />
