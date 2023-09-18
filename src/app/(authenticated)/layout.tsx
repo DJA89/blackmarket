@@ -2,8 +2,9 @@
 
 import { useMediaQuery } from 'react-responsive';
 
-import MobileHeader from '~/layout/MobileHeader';
-import DesktopHeader from '~/layout/DesktopHeader';
+import MobileHeader from '~/layout/header/MobileHeader';
+import DesktopHeader from '~/layout/header/DesktopHeader';
+import Links from '~/layout/footer/Links';
 import Link from 'next/link';
 
 export default function Layout() {
@@ -22,7 +23,12 @@ export default function Layout() {
           {isTabletOrMobile ? <MobileHeader /> : <DesktopHeader />}
         </div>
       </div>
-      <main></main>
+      <main className="h-139 md:h-67"></main>
+      <footer className="h-138 w-full bg-black px-4">
+        <div className="mx-auto w-88 py-11 sm:w-121 md:w-274">
+          <Links />
+        </div>
+      </footer>
     </>
   );
 }
