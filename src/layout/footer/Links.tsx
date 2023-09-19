@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Links() {
   return (
-    <div className="flex h-58 w-88 flex-col justify-between text-white md:w-171 md:flex-row">
+    <div className="flex h-58 w-88 flex-col justify-between text-white sm:w-121 md:w-171 md:flex-row">
       <div className="flex h-29 w-full flex-row justify-between md:w-88">
         <div className="flex h-29 flex-col justify-between md:h-39">
           <h3 className="font-bold">Restore Furniture</h3>
