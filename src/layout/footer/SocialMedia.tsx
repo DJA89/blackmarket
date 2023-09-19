@@ -7,7 +7,7 @@ import linkedin from '~/../public/authenticated/linkedin.svg';
 
 export default function SocialMedia() {
   return (
-    <div className="my-9 flex h-9 w-88 items-center justify-between sm:w-121 md:my-0 md:w-171">
+    <div className="mb-9 flex h-9 w-88 items-center justify-between sm:w-121 md:mb-0 md:w-171">
       <Image src={Logo} alt="Black Market" className="w-26 md:w-48" />
       <div className="w-39 md:w-auto">
         <div className="flex w-24 items-center justify-between md:w-32">

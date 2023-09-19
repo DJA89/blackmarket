@@ -6,7 +6,8 @@ import MobileHeader from '~/layout/header/MobileHeader';
 import DesktopHeader from '~/layout/header/DesktopHeader';
 import Links from '~/layout/footer/Links';
 import Link from 'next/link';
-import SocialMedia from '~/layout/footer/SocialMedia';
+import MobileFooter from '~/layout/footer/MobileFooter';
+import DesktopFooter from '~/layout/footer/DesktopFooter';
 
 export default function Layout() {
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 768px)' });
@@ -26,10 +27,8 @@ export default function Layout() {
       </div>
       <main className="h-139 md:h-67"></main>
       <footer className="h-138 w-full bg-black px-4 md:h-91">
-        <div className="mx-auto w-88 py-11 sm:w-121 md:w-274">
-          {isTabletOrMobile ? <SocialMedia /> : null}
-          <Links />
-          {isTabletOrMobile ? null : <SocialMedia />}
+        <div className="mx-auto w-88 py-9 sm:w-121 md:py-11 md:w-274">
+          {isTabletOrMobile ? <MobileFooter /> : <DesktopFooter />}
         </div>
       </footer>
     </>
