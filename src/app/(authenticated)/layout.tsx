@@ -4,7 +4,6 @@ import { useMediaQuery } from 'react-responsive';
 
 import MobileHeader from '~/layout/header/MobileHeader';
 import DesktopHeader from '~/layout/header/DesktopHeader';
-import Links from '~/layout/footer/Links';
 import Link from 'next/link';
 import MobileFooter from '~/layout/footer/MobileFooter';
 import DesktopFooter from '~/layout/footer/DesktopFooter';
@@ -26,8 +25,8 @@ export default function Layout() {
         </div>
       </div>
       <main className="h-139 md:h-67"></main>
-      <footer className="h-138 w-full bg-black px-4 md:h-91">
-        <div className="mx-auto w-88 py-9 sm:w-121 md:py-11 md:w-274">
+      <footer className="h-138 w-full bg-black px-4 text-white md:h-167 lg:h-91">
+        <div className="mx-auto w-88 py-9 sm:w-121 md:flex md:w-171 md:flex-wrap md:justify-between md:py-11 lg:w-274">
           {isTabletOrMobile ? <MobileFooter /> : <DesktopFooter />}
         </div>
       </footer>
