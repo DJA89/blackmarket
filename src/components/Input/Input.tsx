@@ -3,6 +3,7 @@ import { useState, ChangeEvent } from 'react';
 import visibleImage from '~/../public/components/Input/visibility.png';
 import nonVisisbleImage from '~/../public/components/Input/visibility_off.png';
 import Image from 'next/image';
+import InnerInput from './InnerInput';
 
 export default function Input({
   name,
@@ -12,6 +13,7 @@ export default function Input({
   hideButton = false,
   required = false,
   errorMessage = null,
+  extraClasses = '',
   disabled = false,
   handleChange,
   value,
@@ -23,6 +25,7 @@ export default function Input({
   hideButton?: boolean;
   required?: boolean;
   errorMessage?: string | null;
+  extraClasses?: string;
   disabled?: boolean;
   handleChange: (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -54,28 +57,19 @@ export default function Input({
         {`${label}${required ? ' *' : ''}`}
       </label>
       <div className="relative flex">
-        <input
+        <InnerInput
           name={name}
           type={usedType}
-          // eslint-disable-next-line tailwindcss/classnames-order, tailwindcss/no-custom-classname
-          className={`h-11 w-72 rounded-lg border ${inputBorderClass} p-3 \
-                      leading-5 placeholder:text-[#757575] \
-                      hover:border-hover hover:placeholder:text-dark-grey \
-                      focus:border-black focus:placeholder:text-dark-grey \
-                      focus-visible:outline-dashed focus-visible:outline-focus \
-                      active:border-active active:outline-active-outline \
-                      active:placeholder:text-dark-grey \
-                      disabled:border-dark-grey disabled:bg-background \
-                      disabled:text-dark-grey outline-offset-3`}
+          extraClasses={extraClasses}
           placeholder={placeholder}
           disabled={disabled}
-          onChange={handleChange}
-          aria-label={label}
-          aria-required={required}
+          ariaLabel={label}
+          required={required}
           aria-describedby={`${name}-error`}
-          aria-invalid={!!errorMessage}
-          autoComplete={name === 'password' ? '' : name}
+          errorMessage={errorMessage}
           value={value}
+          handleChange={handleChange}
+          visible={visible}
         />
         {hideButton ? (
           <button

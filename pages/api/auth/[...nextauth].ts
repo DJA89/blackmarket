@@ -49,6 +49,7 @@ export const authOptions: AuthOptions = {
             return user;
           }
         }
+
         // Return null if user data could not be retrieved
         return null;
       },

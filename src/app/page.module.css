@@ -18,13 +18,6 @@
   font-family: var(--font-mono);
 }
 
-.description a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
 .description p {
   position: relative;
   margin: 0;
@@ -205,10 +198,6 @@
 
   .description {
     font-size: 0.8rem;
-  }
-
-  .description a {
-    padding: 1rem;
   }
 
   .description p,
