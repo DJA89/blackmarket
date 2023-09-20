@@ -14,28 +14,28 @@ export default function SocialMedia() {
       </Link>
       <div className="w-39 md:w-auto">
         <div className="flex w-24 items-center justify-between md:w-32">
-          <Link href="https://www.instagram.com">
+          <Link href="https://www.instagram.com" target="_blank">
             <Image
               src={instagram}
               alt="Instagram link"
               className="h-3 w-3 shrink-0 md:h-5 md:w-3"
             />
           </Link>
-          <Link href="https://www.facebook.com">
+          <Link href="https://www.facebook.com" target="_blank">
             <Image
               src={facebook}
               alt="Facebook link"
               className="h-3 w-3 shrink-0 md:h-5 md:w-3"
             />
           </Link>
-          <Link href="https://www.twitter.com">
+          <Link href="https://www.twitter.com" target="_blank">
             <Image
               src={twitter}
               alt="Twitter link"
               className="h-3 w-3 shrink-0 md:h-5 md:w-3"
             />
           </Link>
-          <Link href="https://www.linkedin.com">
+          <Link href="https://www.linkedin.com" target="_blank">
             <Image
               src={linkedin}
               alt="Linkedin link"
