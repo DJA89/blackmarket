@@ -8,6 +8,7 @@ import InnerInput from './InnerInput';
 export default function Input({
   name,
   label,
+  labelColour = null,
   type = 'text',
   placeholder = '',
   hideButton = false,
@@ -20,6 +21,7 @@ export default function Input({
 }: {
   name: string;
   label: string;
+  labelColour?: string | null;
   type?: string;
   placeholder?: string;
   hideButton?: boolean;
@@ -46,13 +48,13 @@ export default function Input({
     inputBorderClass = 'border-[#D42F1A]';
   }
 
+  labelColour ||= disabled ? 'text-dark-grey' : 'text-dark-violet';
+
   return (
     <div className="flex flex-col align-top">
       <label
         htmlFor={name}
-        className={`mb-1 text-base leading-5 ${
-          disabled ? 'text-dark-grey' : 'text-dark-violet'
-        }`}
+        className={`mb-1 text-base leading-5 ${labelColour}`}
       >
         {`${label}${required ? ' *' : ''}`}
       </label>

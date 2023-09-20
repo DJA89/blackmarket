@@ -4,6 +4,7 @@ import Image from 'next/image';
 type ButtonType = 'primary' | 'outline';
 
 export default function Button({
+  borderColour = null,
   text,
   handleClick,
   disabled = false,
@@ -13,6 +14,7 @@ export default function Button({
   extraClasses = '',
   image = null,
 }: {
+  borderColour?: string | null;
   text: string;
   handleClick?: () => void;
   disabled?: boolean;
@@ -23,12 +25,18 @@ export default function Button({
   image?: HTMLImageElement | null;
 }) {
   let classes =
-    'px-4 flex h-11 items-center justify-center rounded-lg hover:border-transparent hover:bg-hover active:border-active-outline active:bg-active disabled:bg-light-grey disabled:text-dark-grey';
+    'border px-4 flex h-11 items-center justify-center rounded-lg\
+    hover:border-transparent hover:bg-hover active:border-active-outline\
+    active:bg-active disabled:bg-light-grey disabled:text-dark-grey';
   if (type == 'primary') {
+    borderColour ||= '';
     classes = `${classes} bg-dark-violet text-white`;
   } else {
-    classes = `${classes} border border-dark-violet bg-white text-dark-violet`;
+    borderColour ||= 'border-dark-violet';
+    classes = `${classes} bg-white text-dark-violet`;
   }
+
+  classes = `${classes} ${borderColour}`;
 
   classes = `${classes} ${extraClasses}`;
 
