@@ -6,7 +6,7 @@ export default function Subscribe() {
   const [email, setEmail] = useState('');
 
   return (
-    <div className="mt-7 sm:mx-16 md:mx-0 md:mt-19 lg:mt-0">
+    <div className="mt-7 sm:mx-16 md:mx-0 md:mt-0">
       <div className="mb-4 font-bold md:text-2xl">
         Subscribe to our weekly newletter!
       </div>
