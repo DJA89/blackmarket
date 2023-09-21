@@ -28,3 +28,15 @@ declare module 'next-auth' {
     user?: User;
   }
 }
+declare module 'next-auth/jwt' {
+  /** Returned by the `jwt` callback and `getToken`, when using JWT sessions */
+  interface JWT {
+    /** OpenID ID Token */
+    idToken?: string;
+    accessToken?: string;
+    client?: string;
+    uid?: string;
+    expiry?: number;
+    user?: User;
+  }
+}
