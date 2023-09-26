@@ -15,6 +15,12 @@ export const authOptions: AuthOptions = {
       }
       return false;
     },
+    async jwt({ token, user }) {
+      if (user && user?.accessToken) {
+        return { ...token, user };
+      }
+      return token;
+    },
   },
   providers: [
     CredentialsProvider({

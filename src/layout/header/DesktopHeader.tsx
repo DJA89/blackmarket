@@ -8,6 +8,7 @@ import shoppingCartSymbol from '~/../public/authenticated/shoppingCartSymbol.svg
 import { useMenuState, Menu, MenuItem, MenuButton } from 'reakit/Menu';
 import dropdownArrow from '~/../public/authenticated/dropdownArrow.svg';
 import SearchBar from '~/components/SearchBar';
+import { signOut } from 'next-auth/react';
 
 export default function DesktopHeader() {
   const menu = useMenuState();
@@ -20,6 +21,7 @@ export default function DesktopHeader() {
   } else {
     extraMenuClass = 'rounded-lg';
   }
+
   return (
     <header className="w-full bg-black">
       <div className="flex h-23  flex-row items-center justify-between p-14">
@@ -47,7 +49,11 @@ export default function DesktopHeader() {
             <MenuItem {...menu} className="menu-item" as="a" href="#">
               Previous Orders
             </MenuItem>
-            <MenuItem {...menu} className="menu-item rounded-b-lg text-left">
+            <MenuItem
+              {...menu}
+              className="menu-item rounded-b-lg text-left"
+              onClick={() => signOut()}
+            >
               Log out
             </MenuItem>
           </Menu>
