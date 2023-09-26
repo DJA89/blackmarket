@@ -17,10 +17,12 @@ export default withAuth(
     callbacks: {
       authorized: ({ req, token }) => {
         const pathname = req.nextUrl.pathname;
-        const tokenPresent = !!token?.user?.accessToken;
+
         if (PUBLIC_PATHS.includes(pathname)) {
           return true;
         }
+
+        const tokenPresent = !!token?.user?.accessToken;
 
         return tokenPresent;
       },

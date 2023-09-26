@@ -8,6 +8,7 @@ import smallShoppingCartSymbol from '~/../public/authenticated/smallShoppingCart
 import { useMenuState, Menu, MenuItem, MenuButton } from 'reakit/Menu';
 import hamburger from '~/../public/authenticated/hamburger.svg';
 import SearchBar from '~/components/SearchBar';
+import { signOut } from 'next-auth/react';
 
 export default function MobileHeader() {
   const menu = useMenuState();
@@ -54,7 +55,11 @@ export default function MobileHeader() {
               <MenuItem {...menu} className="mobile-menu-item" as="a" href="#">
                 Previous Orders
               </MenuItem>
-              <MenuItem {...menu} className="mobile-menu-item text-left">
+              <MenuItem
+                {...menu}
+                className="mobile-menu-item text-left"
+                onClick={() => signOut()}
+              >
                 Log out
               </MenuItem>
             </Menu>
