@@ -25,7 +25,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={fontDMSans.className}>
-      <body>
+      <body className="bg-black">
         <AuthContext session={session}>
           <AuthLayoutProvider session={session}>{children}</AuthLayoutProvider>
         </AuthContext>

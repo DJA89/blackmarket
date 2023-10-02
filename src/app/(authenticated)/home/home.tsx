@@ -1,3 +1,5 @@
+import ProductCardRow from '~/components/ProductCardRow';
+
 export default function Home() {
-  return <div>Nothing here yet</div>;
+  return <ProductCardRow />;
 }
