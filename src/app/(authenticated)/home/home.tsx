@@ -1,5 +1,5 @@
-import ProductCardRow from '~/components/ProductCardRow';
+import ProductListSection from '~/components/ProductListSection';
 
 export default function Home() {
-  return <ProductCardRow />;
+  return <ProductListSection />;
 }

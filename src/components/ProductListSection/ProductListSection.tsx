@@ -7,7 +7,7 @@ import { useApi } from '~/hooks/useApi';
 import { useAuthLayout } from '~/hooks/useAuthLayout';
 import { Product } from '~/types/product';
 
-export default function ProductCardRow() {
+export default function ProductListSection() {
   const [products, setProducts] = useState<Product[]>([]);
 
   const { session } = useAuthLayout();
