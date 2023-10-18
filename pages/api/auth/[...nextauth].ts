@@ -21,6 +21,9 @@ export const authOptions: AuthOptions = {
       }
       return token;
     },
+    async session({ session, token }) {
+      return { ...session, user: token.user };
+    },
   },
   providers: [
     CredentialsProvider({

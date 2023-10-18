@@ -1,3 +1,5 @@
+import ProductListSection from '~/components/ProductListSection';
+
 export default function Home() {
-  return <div>Nothing here yet</div>;
+  return <ProductListSection />;
 }
