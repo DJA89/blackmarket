@@ -1,4 +1,4 @@
-import { API } from '~/utils/constants';
+import { API, API_BASE_URL } from '~/utils/constants';
 import NextAuth, { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
@@ -15,10 +15,36 @@ export const authOptions: AuthOptions = {
       }
       return false;
     },
-    async jwt({ token, user }) {
-      if (user && user?.accessToken) {
-        return { ...token, user };
+    async jwt({ token }) {
+      if (token?.exp && Date.now() < token.exp * 1000) {
+        try {
+          const response = await fetch(
+            `${API_BASE_URL}/dj-rest-auth/token/refresh/`,
+            {
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              body: new URLSearchParams({
+                refresh: token.user.refreshToken,
+              }),
+              method: 'POST',
+            }
+          );
+
+          const tokens = await response.json();
+
+          if (!response.ok) throw tokens;
+
+          return {
+            ...token,
+            user: { ...token.user, accessToken: tokens.access },
+            exp: new Date(tokens.access_token_expiration).getTime(),
+          };
+        } catch (error) {
+          // Return previous token on error
+          console.log(error);
+          return token;
+        }
       }
+
       return token;
     },
     async session({ session, token }) {
@@ -50,11 +76,12 @@ export const authOptions: AuthOptions = {
             throw new Error(error.error);
           }
 
-          let { user, access_token } = await res.json();
+          let { user, access_token, refresh_token } = await res.json();
 
           // If no error and we have user data, return it
           if (res.ok && user) {
             user.accessToken = access_token;
+            user.refreshToken = refresh_token;
             return user;
           }
         }

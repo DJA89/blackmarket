@@ -2,6 +2,7 @@ import axios from 'axios';
 import { Callbacks, manageError, manageResponse } from '~/utils/utils';
 import { Session } from 'next-auth';
 import { useMemo, useCallback } from 'react';
+import { API_BASE_URL } from '~/utils/constants';
 
 type CallsProps = {
   endpoint: string;
@@ -23,12 +24,8 @@ interface AuthProviderProps {
   session: Session | null;
 }
 
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  'https://black-market-juan-rs.herokuapp.com';
-
 const instance = axios.create({
-  baseURL: API_URL,
+  baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
