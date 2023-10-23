@@ -15,7 +15,7 @@ export const authOptions: AuthOptions = {
       }
       return false;
     },
-    async jwt({ token }) {
+    async jwt({ token, user }) {
       if (token?.exp && Date.now() < token.exp * 1000) {
         try {
           const response = await fetch(
@@ -40,12 +40,12 @@ export const authOptions: AuthOptions = {
           };
         } catch (error) {
           // Return previous token on error
-          console.log(error);
+          console.log('error: ', error);
           return token;
         }
       }
 
-      return token;
+      return { ...token, user };
     },
     async session({ session, token }) {
       return { ...session, user: token.user };
