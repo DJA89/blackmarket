@@ -15,7 +15,7 @@ export default function AllProductsListSection() {
   const [products, setProducts] = useState<Product[]>([]);
   const [maxPage, setMaxPage] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [noProducts, setNoProducts] = useState<boolean>(false);
+  const [noProductsFound, setNoProductsFound] = useState<boolean>(false);
   const [loaded, setLoaded] = useState<boolean>(false);
 
   const { session } = useAuthLayout();
@@ -26,7 +26,7 @@ export default function AllProductsListSection() {
       const products = await doGet({
         endpoint: `/api/products/?page=${currentPage}&page_size=${maxProductsPerpage}`,
       });
-      setNoProducts(products.count < 1);
+      setNoProductsFound(products.count < 1);
       setMaxPage(Math.ceil(products.count / maxProductsPerpage));
       setProducts(products.results);
       setLoaded(true);
@@ -48,7 +48,7 @@ export default function AllProductsListSection() {
 
   return (
     <>
-      {noProducts ? (
+      {noProductsFound ? (
         <div className="my-10">No products match your search</div>
       ) : (
         <>
