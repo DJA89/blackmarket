@@ -5,7 +5,7 @@ import Link from 'next/link';
 import NotFavourite from '~/../public/authenticated/not-favourite.svg';
 import Favourite from '~/../public/authenticated/favourite.svg';
 
-export default function ProductCard({
+export default function HomeProductCard({
   image,
   price,
   name,

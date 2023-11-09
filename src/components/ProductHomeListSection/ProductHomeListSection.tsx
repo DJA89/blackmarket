@@ -1,13 +1,13 @@
 'use client';
 
-import ProductCard from '~/components/ProductCard/ProductCard';
+import ProductCard from '~/components/HomeProductCard/HomeProductCard';
 import Link from 'next/link';
 import { useEffect, useState, useCallback } from 'react';
 import { useApi } from '~/hooks/useApi';
 import { useAuthLayout } from '~/hooks/useAuthLayout';
 import { Product } from '~/types/product';
 
-export default function ProductListSection() {
+export default function ProductHomeListSection() {
   const [products, setProducts] = useState<Product[]>([]);
 
   const { session } = useAuthLayout();
@@ -43,7 +43,7 @@ export default function ProductListSection() {
         </ul>
       </div>
       <div className="my-4 flex h-6 justify-center align-middle md:mb-10 md:mt-5">
-        <Link href="#" className="font-bold text-blue-600">
+        <Link href="/products" className="font-bold text-blue-600">
           See all
         </Link>
       </div>
