@@ -7,6 +7,7 @@ import DesktopHeader from '~/layout/header/DesktopHeader';
 import Link from 'next/link';
 import MobileFooter from '~/layout/footer/MobileFooter';
 import DesktopFooter from '~/layout/footer/DesktopFooter';
+import { SearchProvider } from '~/hooks/useSearch';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 768px)' });
@@ -21,7 +22,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </Link>
       <div className="fixed top-0 z-50 w-full bg-black">
         <div className="mx-auto max-w-360">
-          {isTabletOrMobile ? <MobileHeader /> : <DesktopHeader />}
+          <SearchProvider>
+            {isTabletOrMobile ? <MobileHeader /> : <DesktopHeader />}
+          </SearchProvider>
         </div>
       </div>
       <main className="mt-38 md:mt-28">{children}</main>
