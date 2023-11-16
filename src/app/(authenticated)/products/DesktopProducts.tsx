@@ -16,8 +16,8 @@ export default function DesktopProducts() {
           <div className="w-71 text-2xl">
             {search ? (
               <>
-                You searched for{' '}
-                <span className="font-bold">{`"${search}"`}</span>
+                You searched for
+                <span className="font-bold">{`" ${search}"`}</span>
               </>
             ) : (
               <>{'All Products'}</>
