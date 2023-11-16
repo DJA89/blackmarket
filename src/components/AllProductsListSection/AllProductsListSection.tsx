@@ -8,6 +8,7 @@ import { Product } from '~/types/product';
 import lessThan from '~/../public/authenticated/lessThan.svg';
 import greaterThan from '~/../public/authenticated/greaterThan.svg';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 
 const maxProductsPerpage = 6;
 
@@ -20,18 +21,21 @@ export default function AllProductsListSection() {
 
   const { session } = useAuthLayout();
   const { doGet } = useApi({ session });
+  const searchParams = useSearchParams();
+  const search = searchParams?.get('search');
 
   const fetchProducts = useCallback(
     async (currentPage: number) => {
+      const searchRequest = search ? `&search=${search}` : '';
       const products = await doGet({
-        endpoint: `/api/products/?page=${currentPage}&page_size=${maxProductsPerpage}`,
+        endpoint: `/api/products/?page=${currentPage}&page_size=${maxProductsPerpage}${searchRequest}`,
       });
       setNoProductsFound(products.count < 1);
       setMaxPage(Math.ceil(products.count / maxProductsPerpage));
       setProducts(products.results);
       setLoaded(true);
     },
-    [doGet]
+    [doGet, search]
   );
 
   useEffect(() => {
