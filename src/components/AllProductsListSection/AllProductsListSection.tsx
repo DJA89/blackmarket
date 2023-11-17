@@ -18,6 +18,7 @@ export default function AllProductsListSection() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [noProductsFound, setNoProductsFound] = useState<boolean>(false);
   const [loaded, setLoaded] = useState<boolean>(false);
+  const [cart, setCart] = useState([]);
 
   const { session } = useAuthLayout();
   const { doGet } = useApi({ session });
@@ -38,9 +39,15 @@ export default function AllProductsListSection() {
     [doGet, search]
   );
 
+  const fetchCart = useCallback(async () => {
+    const cart = await doGet({ endpoint: '/api/shopping-cart/' });
+    setCart(cart['order_products']);
+  }, [doGet]);
+
   useEffect(() => {
     fetchProducts(currentPage);
-  }, [fetchProducts, currentPage]);
+    fetchCart();
+  }, [fetchProducts, fetchCart, currentPage]);
 
   const previousPage = (currentPage: number) => {
     return Math.max(currentPage - 1, 1);
@@ -68,6 +75,9 @@ export default function AllProductsListSection() {
                     favourite={product.is_favorite}
                     firstProduct={index === 0}
                     lastProduct={index === array.length - 1}
+                    id={product.id}
+                    cart={cart}
+                    setCart={setCart}
                   />
                 </li>
               );

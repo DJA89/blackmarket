@@ -1,11 +1,15 @@
 'use client';
 
+import { useCallback } from 'react';
 import Image from 'next/image';
 import NotFavourite from '~/../public/authenticated/not-favourite.svg';
 import Favourite from '~/../public/authenticated/favourite.svg';
 import Button from '~/components/Button';
+import { useApi } from '~/hooks/useApi';
+import { useAuthLayout } from '~/hooks/useAuthLayout';
 
 export default function GeneralProductCard({
+  id,
   image,
   price,
   name,
@@ -13,7 +17,10 @@ export default function GeneralProductCard({
   favourite,
   firstProduct = false,
   lastProduct = false,
+  cart,
+  setCart,
 }: {
+  id: string;
   image: string;
   price: number;
   name: string;
@@ -21,12 +28,41 @@ export default function GeneralProductCard({
   favourite: boolean;
   firstProduct?: boolean;
   lastProduct?: boolean;
+  cart: Array<{ quantity: number; product: { id: string } }>;
+  setCart: Function;
 }) {
+  const { session } = useAuthLayout();
+  const { doPost, doGet } = useApi({ session });
+
   const stateBackgroundColour =
     state === 'Restored' ? 'bg-[#559F21]' : 'bg-[#F2C94C]';
   const favouriteIcon = favourite ? Favourite : NotFavourite;
 
   let extraClasses = '';
+
+  const quantityForProduct = useCallback(
+    (id: string): number => {
+      const item = cart.find((cartItem) => {
+        return cartItem.product?.id === id;
+      });
+
+      if (!item) {
+        return 0;
+      } else {
+        return item.quantity;
+      }
+    },
+    [cart]
+  );
+
+  const addProductToCart = async (id: string) => {
+    await doPost({
+      endpoint: '/api/shopping-cart/products/',
+      body: { product: id, quantity: quantityForProduct(id) + 1 },
+    });
+    const newCart = await doGet({ endpoint: '/api/shopping-cart/' });
+    setCart(newCart['order_products']);
+  };
 
   if (firstProduct) {
     extraClasses = 'rounded-t-lg';
@@ -73,9 +109,10 @@ export default function GeneralProductCard({
           <Button
             text="Add to cart"
             handleClick={() => {
-              return null;
+              addProductToCart(id, 1);
             }}
             extraClasses="max-md:h-5 max-md:w-24 max-md:text-sm max-md:px-2"
+            alt-text={`${name}, add to cart`}
           />
         </div>
       </div>
