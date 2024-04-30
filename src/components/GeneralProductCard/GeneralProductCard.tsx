@@ -1,12 +1,15 @@
 'use client';
 
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import Image from 'next/image';
+import Checkmark from '~/../public/authenticated/checkmark.svg';
 import NotFavourite from '~/../public/authenticated/not-favourite.svg';
 import Favourite from '~/../public/authenticated/favourite.svg';
 import Button from '~/components/Button';
 import { useApi } from '~/hooks/useApi';
 import { useAuthLayout } from '~/hooks/useAuthLayout';
+import Modal from 'react-modal';
+import closeModal from '~/../public/authenticated/close-modal.svg';
 
 export default function GeneralProductCard({
   id,
@@ -30,9 +33,25 @@ export default function GeneralProductCard({
   lastProduct?: boolean;
   cart: Array<{ quantity: number; product: { id: string } }>;
   setCart: Function;
+  setAddedToCartVisible: Function;
+  setAddedToCartProduct: Function;
 }) {
   const { session } = useAuthLayout();
   const { doPost, doGet } = useApi({ session });
+  const [isOpen, setIsOpen] = useState(false);
+
+  const modalStyles = {
+    content: {
+      margin: 'auto',
+      height: '15.75rem',
+      width: '66.25rem',
+      top: 32,
+      display: 'flex',
+      'justify-content': 'space-between',
+      padding: '1.75rem 2rem',
+      'align-items': 'center',
+    },
+  };
 
   const stateBackgroundColour =
     state === 'Restored' ? 'bg-[#559F21]' : 'bg-[#F2C94C]';
@@ -55,13 +74,16 @@ export default function GeneralProductCard({
     [cart]
   );
 
-  const addProductToCart = async (id: string) => {
+  const addProductToCart = async () => {
     await doPost({
       endpoint: '/api/shopping-cart/products/',
-      body: { product: id, quantity: quantityForProduct(id) + 1 },
+      body: { product: id, quantity: 1 }, //quantityForProduct(id) + 1 },
     });
     const newCart = await doGet({ endpoint: '/api/shopping-cart/' });
     setCart(newCart['order_products']);
+    setIsOpen(true);
+    // setAddedToCartProduct({image: image, name: name});
+    // setAddedToCartVisible(true);
   };
 
   if (firstProduct) {
@@ -106,14 +128,64 @@ export default function GeneralProductCard({
             alt="Mark as favourite"
             className="h-4 w-5 md:h-6 md:w-6"
           />
+          {/* <AddToCartButton onClick={addProductToCart} /> */}
           <Button
             text="Add to cart"
-            handleClick={() => {
-              addProductToCart(id, 1);
-            }}
+            handleClick={addProductToCart}
             extraClasses="max-md:h-5 max-md:w-24 max-md:text-sm max-md:px-2"
             alt-text={`${name}, add to cart`}
           />
+          <Modal isOpen={isOpen} style={modalStyles}>
+            <div className="relative h-44 w-65 rounded-lg border border-green-600">
+              <Image
+                src={image}
+                alt=""
+                fill={true}
+                className="h-full w-full object-contain"
+              />
+              <Image
+                src={Checkmark}
+                alt=""
+                className="absolute bottom-0 right-0 h-12 w-12"
+              />
+            </div>
+            <div className="flex h-44 w-145 flex-col justify-between text-dark-violet">
+              <div className="text-2xl font-bold">
+                {`${name} has been successfully added to your shopping cart!`}
+              </div>
+              <div className="text-xl">
+                You can go to the checkout or keep looking for more awesome
+                items!
+              </div>
+              <div className="flex">
+                <Button
+                  text="Go to checkout"
+                  extraClasses="h-11 w-45 mr-4"
+                  handleClick={() => {
+                    setIsOpen(false);
+                  }}
+                />
+                <Button
+                  text="Continue shopping"
+                  type="outline"
+                  extraClasses="h-11 w-45"
+                  handleClick={() => {
+                    setIsOpen(false);
+                  }}
+                />
+              </div>
+            </div>
+            <div className="relative h-44 w-29">
+              <Button
+                text=""
+                image={closeModal}
+                extraClasses="absolute right-0 top-0 bg-transparent border-none"
+                handleClick={() => {
+                  setIsOpen(false);
+                }}
+              />
+            </div>
+          </Modal>
         </div>
       </div>
     </div>
