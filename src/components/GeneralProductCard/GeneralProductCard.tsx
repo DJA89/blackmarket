@@ -43,13 +43,11 @@ export default function GeneralProductCard({
   const modalStyles = {
     content: {
       margin: 'auto',
-      height: '15.75rem',
-      width: '66.25rem',
+      width: 'fit-content',
+      height: 'fit-content',
       top: 32,
-      display: 'flex',
-      'justify-content': 'space-between',
-      padding: '1.75rem 2rem',
-      'align-items': 'center',
+      padding: 0,
+      display: 'inline-block',
     },
   };
 
@@ -77,13 +75,11 @@ export default function GeneralProductCard({
   const addProductToCart = async () => {
     await doPost({
       endpoint: '/api/shopping-cart/products/',
-      body: { product: id, quantity: 1 }, //quantityForProduct(id) + 1 },
+      body: { product: id, quantity: quantityForProduct(id) + 1 },
     });
     const newCart = await doGet({ endpoint: '/api/shopping-cart/' });
     setCart(newCart['order_products']);
     setIsOpen(true);
-    // setAddedToCartProduct({image: image, name: name});
-    // setAddedToCartVisible(true);
   };
 
   if (firstProduct) {
@@ -136,54 +132,56 @@ export default function GeneralProductCard({
             alt-text={`${name}, add to cart`}
           />
           <Modal isOpen={isOpen} style={modalStyles}>
-            <div className="relative h-44 w-65 rounded-lg border border-green-600">
-              <Image
-                src={image}
-                alt=""
-                fill={true}
-                className="h-full w-full object-contain"
-              />
-              <Image
-                src={Checkmark}
-                alt=""
-                className="absolute bottom-0 right-0 h-12 w-12"
-              />
-            </div>
-            <div className="flex h-44 w-145 flex-col justify-between text-dark-violet">
-              <div className="text-2xl font-bold">
-                {`${name} has been successfully added to your shopping cart!`}
+            <div className="flex h-121 flex-col items-center justify-between px-8 py-7 md:h-63 md:w-210 md:flex-row xl:mr-8 xl:w-265">
+              <div className="relative mr-8 h-44 w-65 rounded-lg border border-green-600 xl:mr-0">
+                <Image
+                  src={image}
+                  alt=""
+                  fill={true}
+                  className="h-full w-full object-contain"
+                />
+                <Image
+                  src={Checkmark}
+                  alt=""
+                  className="absolute bottom-0 right-0 h-12 w-12"
+                />
               </div>
-              <div className="text-xl">
-                You can go to the checkout or keep looking for more awesome
-                items!
+              <div className="flex h-44 w-145 flex-col items-center justify-between text-dark-violet xl:mt-4">
+                <div className="text-2xl font-bold">
+                  {`${name} has been successfully added to your shopping cart!`}
+                </div>
+                <div className="text-xl">
+                  You can go to the checkout or keep looking for more awesome
+                  items!
+                </div>
+                <div className="flex">
+                  <Button
+                    text="Go to checkout"
+                    extraClasses="h-11 w-45 mr-4"
+                    handleClick={() => {
+                      setIsOpen(false);
+                    }}
+                  />
+                  <Button
+                    text="Continue shopping"
+                    type="outline"
+                    extraClasses="h-11 w-45"
+                    handleClick={() => {
+                      setIsOpen(false);
+                    }}
+                  />
+                </div>
               </div>
-              <div className="flex">
+              <div className="relative hidden h-44 w-29 md:block">
                 <Button
-                  text="Go to checkout"
-                  extraClasses="h-11 w-45 mr-4"
+                  text=""
+                  image={closeModal}
+                  extraClasses="absolute right-0 top-0 bg-transparent border-none"
                   handleClick={() => {
                     setIsOpen(false);
                   }}
                 />
-                <Button
-                  text="Continue shopping"
-                  type="outline"
-                  extraClasses="h-11 w-45"
-                  handleClick={() => {
-                    setIsOpen(false);
-                  }}
-                />
               </div>
-            </div>
-            <div className="relative h-44 w-29">
-              <Button
-                text=""
-                image={closeModal}
-                extraClasses="absolute right-0 top-0 bg-transparent border-none"
-                handleClick={() => {
-                  setIsOpen(false);
-                }}
-              />
             </div>
           </Modal>
         </div>
