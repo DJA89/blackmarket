@@ -33,8 +33,6 @@ export default function GeneralProductCard({
   lastProduct?: boolean;
   cart: Array<{ quantity: number; product: { id: string } }>;
   setCart: Function;
-  setAddedToCartVisible: Function;
-  setAddedToCartProduct: Function;
 }) {
   const { session } = useAuthLayout();
   const { doPost, doGet } = useApi({ session });
@@ -124,7 +122,6 @@ export default function GeneralProductCard({
             alt="Mark as favourite"
             className="h-4 w-5 md:h-6 md:w-6"
           />
-          {/* <AddToCartButton onClick={addProductToCart} /> */}
           <Button
             text="Add to cart"
             handleClick={addProductToCart}

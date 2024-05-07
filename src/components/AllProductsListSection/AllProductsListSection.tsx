@@ -20,10 +20,6 @@ export default function AllProductsListSection() {
   const [noProductsFound, setNoProductsFound] = useState<boolean>(false);
   const [loaded, setLoaded] = useState<boolean>(false);
   const [cart, setCart] = useState([]);
-  const [addedToCartVisible, setAddedToCartVisible] = useState(false);
-  const [addedToCartProduct, setAddedToCartProduct] = useState<Product | null>(
-    null
-  );
   const addToCartModal = useDialogState();
 
   const { session } = useAuthLayout();
@@ -63,29 +59,12 @@ export default function AllProductsListSection() {
     return Math.min(currentPage + 1, maxPage);
   };
 
-  console.log('addedToCartVisible', addedToCartVisible);
-  console.log('addToCartModal', addToCartModal);
-  console.log('addedToCartProduct', addedToCartProduct);
-  // console.log('',)
-  // console.log('',)
-
   return (
     <>
       {noProductsFound ? (
         <div className="my-10">No products match your search</div>
       ) : (
         <>
-          {addedToCartProduct ? (
-            <Dialog
-              {...addToCartModal}
-              visible={addedToCartVisible}
-              aria-label="Product added to cart"
-              className="bg-white"
-            >
-              Some text!
-              <Image src={addedToCartProduct.product_picture} alt="" />
-            </Dialog>
-          ) : null}
           <ul className="mt-4 shadow-slight-blurr md:shadow-none">
             {products.map((product, index, array) => {
               return (
@@ -101,8 +80,6 @@ export default function AllProductsListSection() {
                     id={product.id}
                     cart={cart}
                     setCart={setCart}
-                    setAddedToCartVisible={setAddedToCartVisible}
-                    setAddedToCartProduct={setAddedToCartProduct}
                   />
                 </li>
               );
