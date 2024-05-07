@@ -129,7 +129,7 @@ export default function GeneralProductCard({
             text="Add to cart"
             handleClick={addProductToCart}
             extraClasses="max-md:h-5 max-md:w-24 max-md:text-sm max-md:px-2"
-            alt-text={`${name}, add to cart`}
+            ariaLabel={`${name}, add to cart`}
           />
           <Modal isOpen={isOpen} style={modalStyles}>
             <div className="flex h-121 flex-col items-center justify-between px-8 py-7 md:h-63 md:w-210 md:flex-row xl:mr-8 xl:w-265">
