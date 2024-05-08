@@ -15,7 +15,7 @@ export default function Button({
   extraClasses = '',
   image = null,
 }: {
-  ariaLabel?: string;
+  ariaLabel?: string | null;
   borderColour?: string | null;
   text: string;
   handleClick?: () => void;
