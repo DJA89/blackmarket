@@ -4,19 +4,18 @@ import Image from 'next/image';
 import NotFavourite from '~/../public/authenticated/not-favourite.svg';
 import Favourite from '~/../public/authenticated/favourite.svg';
 import Button from '~/components/Button';
-import { useCallback } from 'react';
 import { Product } from '~/types/product';
 
 export default function GeneralProductCard({
   product,
   firstProduct = false,
   lastProduct = false,
-  addProductToCart,
+  onAddProductToCart,
 }: {
   product: Product;
   firstProduct?: boolean;
   lastProduct?: boolean;
-  addProductToCart: (product: Product) => Promise<void>;
+  onAddProductToCart: (product: Product) => Promise<void>;
 }) {
   const {
     id,
@@ -43,9 +42,9 @@ export default function GeneralProductCard({
     extraClasses = `${extraClasses} border-b border-black md:border-none`;
   }
 
-  const handleAddToCartClick = useCallback(() => {
-    addProductToCart(product);
-  }, [addProductToCart, product]);
+  const onAddToCartClick = () => {
+    onAddProductToCart(product);
+  };
 
   return (
     <div
@@ -81,7 +80,7 @@ export default function GeneralProductCard({
           />
           <Button
             text="Add to cart"
-            handleClick={handleAddToCartClick}
+            handleClick={onAddToCartClick}
             extraClasses="max-md:h-5 max-md:w-24 max-md:text-sm max-md:px-2"
             ariaLabel={`${name}, add to cart`}
           />
