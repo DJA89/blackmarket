@@ -70,11 +70,7 @@ export default function AllProductsListSection() {
       return cartItem.product?.id === id;
     });
 
-    if (!item) {
-      return 0;
-    }
-
-    return item.quantity;
+    return item ? item.quantity : 0;
   };
 
   const onAddProductToCart = async (product: Product) => {
