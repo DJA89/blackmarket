@@ -17,7 +17,7 @@ export default function Button({
 }: {
   ariaLabel?: string;
   borderColour?: string | null;
-  text: string;
+  text?: string;
   handleClick?: () => void;
   disabled?: boolean;
   type?: ButtonType;

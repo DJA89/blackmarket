@@ -5,6 +5,17 @@ import Checkmark from '~/../public/authenticated/checkmark.svg';
 import Button from '~/components/Button';
 import closeModal from '~/../public/authenticated/close-modal.svg';
 
+const MODAL_STYLES = {
+  content: {
+    margin: 'auto',
+    width: 'fit-content',
+    height: 'fit-content',
+    top: 32,
+    padding: 0,
+    display: 'inline-block',
+  },
+};
+
 export default function AddToCartModal({
   openModal,
   product,
@@ -14,19 +25,8 @@ export default function AddToCartModal({
   product: Product | null;
   onModalClose: () => void;
 }) {
-  const modalStyles = {
-    content: {
-      margin: 'auto',
-      width: 'fit-content',
-      height: 'fit-content',
-      top: 32,
-      padding: 0,
-      display: 'inline-block',
-    },
-  };
-
   return (
-    <Modal isOpen={openModal} style={modalStyles}>
+    <Modal isOpen={openModal} style={MODAL_STYLES}>
       <div className="flex h-121 flex-col items-center justify-between px-8 py-7 md:h-63 md:w-210 md:flex-row xl:mr-8 xl:w-265">
         <div className="relative mr-8 h-44 w-65 rounded-lg border border-green-600 xl:mr-0">
           <Image
@@ -64,7 +64,6 @@ export default function AddToCartModal({
         </div>
         <div className="relative hidden h-44 w-29 md:block">
           <Button
-            text=""
             image={closeModal}
             extraClasses="absolute right-0 top-0 bg-transparent border-none"
             handleClick={onModalClose}

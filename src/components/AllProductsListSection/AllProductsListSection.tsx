@@ -72,9 +72,9 @@ export default function AllProductsListSection() {
 
     if (!item) {
       return 0;
-    } else {
-      return item.quantity;
     }
+
+    return item.quantity;
   };
 
   const onAddProductToCart = async (product: Product) => {
