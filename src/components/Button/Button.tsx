@@ -4,6 +4,7 @@ import Image from 'next/image';
 type ButtonType = 'primary' | 'outline';
 
 export default function Button({
+  ariaLabel,
   borderColour = null,
   text,
   handleClick,
@@ -14,8 +15,9 @@ export default function Button({
   extraClasses = '',
   image = null,
 }: {
+  ariaLabel?: string;
   borderColour?: string | null;
-  text: string;
+  text?: string;
   handleClick?: () => void;
   disabled?: boolean;
   type?: ButtonType;
@@ -53,6 +55,7 @@ export default function Button({
           className={classes}
           style={overrideStyles}
           disabled={disabled}
+          aria-label={ariaLabel}
         >
           {text}
           {image ? <Image src={image} alt={''} /> : null}

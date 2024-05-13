@@ -133,7 +133,7 @@ describe('Sign In', () => {
       email: 'test@example.com',
       password: 'password123',
       redirect: true,
-      callbackUrl: '/',
+      callbackUrl: '/home',
     });
   });
 

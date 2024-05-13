@@ -9,18 +9,26 @@ import lessThan from '~/../public/authenticated/lessThan.svg';
 import greaterThan from '~/../public/authenticated/greaterThan.svg';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
+import AddToCartModal from '../AddToCartModal';
 
 const maxProductsPerpage = 6;
 
 export default function AllProductsListSection() {
+  const [openModal, setOpenModal] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [maxPage, setMaxPage] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [noProductsFound, setNoProductsFound] = useState<boolean>(false);
+  const [productAddedToCart, setProductAddedToCart] = useState<Product | null>(
+    null
+  );
   const [loaded, setLoaded] = useState<boolean>(false);
+  const [cart, setCart] = useState<
+    Array<{ quantity: number; product: Product }>
+  >([]);
 
   const { session } = useAuthLayout();
-  const { doGet } = useApi({ session });
+  const { doPost, doGet } = useApi({ session });
   const searchParams = useSearchParams();
   const search = searchParams?.get('search');
 
@@ -34,13 +42,20 @@ export default function AllProductsListSection() {
       setMaxPage(Math.ceil(products.count / maxProductsPerpage));
       setProducts(products.results);
       setLoaded(true);
+      console.log(products);
     },
     [doGet, search]
   );
 
+  const fetchCart = useCallback(async () => {
+    const cart = await doGet({ endpoint: '/api/shopping-cart/' });
+    setCart(cart['order_products']);
+  }, [doGet]);
+
   useEffect(() => {
     fetchProducts(currentPage);
-  }, [fetchProducts, currentPage]);
+    fetchCart();
+  }, [fetchProducts, fetchCart, currentPage]);
 
   const previousPage = (currentPage: number) => {
     return Math.max(currentPage - 1, 1);
@@ -50,8 +65,35 @@ export default function AllProductsListSection() {
     return Math.min(currentPage + 1, maxPage);
   };
 
+  const quantityForProduct = (id: string): number => {
+    const item = cart.find((cartItem) => {
+      return cartItem.product?.id === id;
+    });
+
+    return item ? item.quantity : 0;
+  };
+
+  const onAddProductToCart = async (product: Product) => {
+    await doPost({
+      endpoint: '/api/shopping-cart/products/',
+      body: {
+        product: product.id,
+        quantity: quantityForProduct(product.id) + 1,
+      },
+    });
+    const newCart = await doGet({ endpoint: '/api/shopping-cart/' });
+    setProductAddedToCart(product);
+    setCart(newCart['order_products']);
+    setOpenModal(true);
+  };
+
   return (
     <>
+      <AddToCartModal
+        openModal={openModal}
+        onModalClose={() => setOpenModal(false)}
+        product={productAddedToCart}
+      />
       {noProductsFound ? (
         <div className="my-10">No products match your search</div>
       ) : (
@@ -61,13 +103,10 @@ export default function AllProductsListSection() {
               return (
                 <li key={product.id}>
                   <GeneralProductCard
-                    image={product.product_picture}
-                    price={product.unit_price}
-                    name={product.name}
-                    state={product.state_display}
-                    favourite={product.is_favorite}
+                    product={product}
                     firstProduct={index === 0}
                     lastProduct={index === array.length - 1}
+                    onAddProductToCart={onAddProductToCart}
                   />
                 </li>
               );

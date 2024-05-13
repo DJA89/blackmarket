@@ -4,24 +4,28 @@ import Image from 'next/image';
 import NotFavourite from '~/../public/authenticated/not-favourite.svg';
 import Favourite from '~/../public/authenticated/favourite.svg';
 import Button from '~/components/Button';
+import { Product } from '~/types/product';
 
 export default function GeneralProductCard({
-  image,
-  price,
-  name,
-  state,
-  favourite,
+  product,
   firstProduct = false,
   lastProduct = false,
+  onAddProductToCart,
 }: {
-  image: string;
-  price: number;
-  name: string;
-  state: string;
-  favourite: boolean;
+  product: Product;
   firstProduct?: boolean;
   lastProduct?: boolean;
+  onAddProductToCart: (product: Product) => Promise<void>;
 }) {
+  const {
+    id,
+    product_picture: image,
+    unit_price: price,
+    name,
+    state_display: state,
+    is_favorite: favourite,
+  } = product;
+
   const stateBackgroundColour =
     state === 'Restored' ? 'bg-[#559F21]' : 'bg-[#F2C94C]';
   const favouriteIcon = favourite ? Favourite : NotFavourite;
@@ -37,6 +41,10 @@ export default function GeneralProductCard({
   } else {
     extraClasses = `${extraClasses} border-b border-black md:border-none`;
   }
+
+  const onAddToCartClick = () => {
+    onAddProductToCart(product);
+  };
 
   return (
     <div
@@ -72,10 +80,9 @@ export default function GeneralProductCard({
           />
           <Button
             text="Add to cart"
-            handleClick={() => {
-              return null;
-            }}
+            handleClick={onAddToCartClick}
             extraClasses="max-md:h-5 max-md:w-24 max-md:text-sm max-md:px-2"
+            ariaLabel={`${name}, add to cart`}
           />
         </div>
       </div>
